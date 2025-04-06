@@ -27,7 +27,7 @@ export function Menu(props: MenuProps): JSX.Element {
             "z-40": true,
             "flex": true,
             "w-90": currentWindowInnerWidth().isGreaterThanOrEqualTo(WindowInnerWidthSize.lg),
-            "w-80": currentWindowInnerWidth().isLessThan(WindowInnerWidthSize.lg),
+            "w-70": currentWindowInnerWidth().isLessThan(WindowInnerWidthSize.lg),
             "px-3": true,
             "py-5": true,
             "absolute": currentWindowInnerWidth().isLessThan(WindowInnerWidthSize.lg),

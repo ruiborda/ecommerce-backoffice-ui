@@ -10,7 +10,9 @@ import {
 import { HomeStorage } from "../assets/icons/HomeStorage"
 import { UploadFile } from "../assets/icons/UploadFile"
 import { Newspaper } from "../assets/icons/Newspaper"
-import { MenuLinks } from "./MenuLinks"
+import { Links } from "./menu/Links"
+import { SectionTitle } from "./menu/SectionTitle"
+import { Divider } from "./menu/Divider"
 
 export class MenuProps {
     menuStatus?: Signal<boolean>
@@ -35,26 +37,35 @@ export function Menu(props: MenuProps): JSX.Element {
             "text-gray-400": true,
             "flex-col": true,
         }}>
-            <h2 class={"text-xl lg:text-3xl p-2"}>Archivos</h2>
-            <MenuLinks
-                icon={<HomeStorage className={iconClass}/>}
-                name={"Lista de Archivos"}
-                isActive={true}
-            />
-            <MenuLinks
-                icon={<UploadFile className={iconClass}/>}
-                name={"Subir Archivo"}
-                isActive={false}
-            />
-
-            <hr class={"border-gray-700 my-5"}/>
-
-            <h2 class={"text-xl lg:text-3xl p-2"}>Articulos de Noticia</h2>
-            <MenuLinks
+            <SectionTitle>
+                Articulos de Noticias
+            </SectionTitle>
+            <Links
+                href={"/"}
                 icon={<Newspaper className={iconClass}/>}
-                name={"Lista de Noticias"}
-                isActive={false}
-            />
+                isActive={false}>
+                Lista de Noticias
+            </Links>
+
+            <Divider/>
+
+            <SectionTitle>
+                Archivos
+            </SectionTitle>
+            <Links
+                href={"/files"}
+                icon={<HomeStorage className={iconClass}/>}
+                isActive={true}>
+                Lista de Archivos
+            </Links>
+            <Links
+                href={"/files/upload"}
+                icon={<UploadFile className={iconClass}/>}
+                isActive={false}>
+                Subir Archivos
+            </Links>
+
+            <Divider/>
         </div>
     )
 }

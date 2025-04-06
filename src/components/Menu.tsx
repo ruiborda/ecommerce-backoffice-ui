@@ -35,7 +35,7 @@ export function Menu(props: MenuProps): JSX.Element {
             "text-gray-400": true,
             "flex-col": true,
         }}>
-            <h2 class={"text-3xl p-2"}>Archivos</h2>
+            <h2 class={"text-xl lg:text-3xl p-2"}>Archivos</h2>
             <MenuLinks
                 icon={<HomeStorage className={iconClass}/>}
                 name={"Lista de Archivos"}
@@ -49,7 +49,7 @@ export function Menu(props: MenuProps): JSX.Element {
 
             <hr class={"border-gray-700 my-5"}/>
 
-            <h2 class={"text-3xl p-2"}>Articulos de Noticia</h2>
+            <h2 class={"text-xl lg:text-3xl p-2"}>Articulos de Noticia</h2>
             <MenuLinks
                 icon={<Newspaper className={iconClass}/>}
                 name={"Lista de Noticias"}

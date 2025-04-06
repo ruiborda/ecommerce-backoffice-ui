@@ -20,7 +20,7 @@ export function MenuLinks({name, isActive, icon}: MenuLinksProps) {
             <div class={"flex justify-center items-center p-2"}>
                 {icon}
             </div>
-            <div class={"p-2 text-xl"}>{name}</div>
+            <div class={"p-2 text-lg lg:text-xl"}>{name}</div>
         </button>
     )
 }

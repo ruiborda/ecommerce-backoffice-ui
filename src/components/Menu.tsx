@@ -7,9 +7,9 @@ import {
     WindowInnerWidth,
     WindowInnerWidthSize,
 } from "../utils/WindowInnerWidth"
-import { HomeStorage } from "../assets/icons/HomeStorage"
-import { UploadFile } from "../assets/icons/UploadFile"
-import { Newspaper } from "../assets/icons/Newspaper"
+import { HomeStorage } from "../assets/material_icons/HomeStorage"
+import { UploadFile } from "../assets/material_icons/UploadFile"
+import { Newspaper } from "../assets/material_icons/Newspaper"
 import { Links } from "./menu/Links"
 import { SectionTitle } from "./menu/SectionTitle"
 import { Divider } from "./menu/Divider"
@@ -41,8 +41,8 @@ export function Menu(props: MenuProps): JSX.Element {
                 Articulos de Noticias
             </SectionTitle>
             <Links
-                href={"/"}
-                icon={<Newspaper className={iconClass}/>}
+                href={"/news-article"}
+                icon={<Newspaper class={iconClass}/>}
                 isActive={false}>
                 Lista de Noticias
             </Links>
@@ -54,13 +54,13 @@ export function Menu(props: MenuProps): JSX.Element {
             </SectionTitle>
             <Links
                 href={"/files"}
-                icon={<HomeStorage className={iconClass}/>}
+                icon={<HomeStorage class={iconClass}/>}
                 isActive={true}>
                 Lista de Archivos
             </Links>
             <Links
                 href={"/files/upload"}
-                icon={<UploadFile className={iconClass}/>}
+                icon={<UploadFile class={iconClass}/>}
                 isActive={false}>
                 Subir Archivos
             </Links>

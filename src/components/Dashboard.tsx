@@ -42,7 +42,7 @@ export function Dashboard(props: DashboardProps): JSX.Element {
 
 
     return (
-        <div class={"flex flex-col h-dvh bg-neutral-200"}>
+        <div class={"flex flex-col h-full w-full overflow-hidden  bg-neutral-200"}>
             <Header menuStatus={[menuStatus, setMenuStatus]}/>
             <div class="flex h-full relative z-40">
                 <Show when={menuStatus()}>
@@ -52,9 +52,14 @@ export function Dashboard(props: DashboardProps): JSX.Element {
                     />
                 </Show>
                 <main classList={{
-                    "relative flex w-full rounded-3xl px-8 py-13 lg:mr-3 lg:mb-3 z-0 shadow border-gray-300 bg-neutral-100 justify-center": true,
+                    "relative flex flex-col  w-full rounded-3xl px-8 py-13 lg:mr-3 lg:mb-3 z-0 shadow border-gray-300 bg-neutral-100 items-center overflow-y-scroll": true,
                     "ml-5": currentWindowInnerWidth().isGreaterThanOrEqualTo(WindowInnerWidthSize.lg),
-                }}>
+                }}
+
+                      style={{
+                            "max-height": "calc(100vh - 0.25rem*20)",
+                      }}
+                >
                     <Show when={currentWindowInnerWidth().isLessThan(WindowInnerWidthSize.lg) && menuStatus()}>
                         <div
                             class="absolute top-0 left-0 w-full h-full backdrop-blur-xs z-10 brightness-90 cursor-pointer"

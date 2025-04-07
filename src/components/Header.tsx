@@ -7,8 +7,8 @@ import {
     Signal,
 } from "solid-js/types/reactive/signal"
 import { WindowInnerWidthSize } from "../utils/WindowInnerWidth"
-import { Menu } from "../assets/icons/Menu"
-import { MenuOpen } from "../assets/icons/MenuOpen"
+import { Menu } from "../assets/material_icons/Menu"
+import { MenuOpen } from "../assets/material_icons/MenuOpen"
 
 export class HeaderProps {
     menuStatus?: Signal<boolean>
@@ -30,10 +30,10 @@ export function Header(props: HeaderProps): JSX.Element {
 
                 <Switch>
                     <Match when={!menuStatus()}>
-                        <Menu className={"h-8 w-8 "}/>
+                        <Menu class={"h-8 w-8 "}/>
                     </Match>
                     <Match when={menuStatus()}>
-                        <MenuOpen className={"h-8 w-8 "}/>
+                        <MenuOpen class={"h-8 w-8 "}/>
                     </Match>
                 </Switch>
             </button>

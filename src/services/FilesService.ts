@@ -18,4 +18,13 @@ export class FilesService {
         const response = await fetch(url.build())
         return response.json()
     }
+
+    async deleteFileById(id: string): Promise<boolean> {
+        const url = new URLBuilder()
+            .setPathname(`/files/${id}`)
+        const response = await fetch(url.build(), {
+            method: "DELETE",
+        })
+        return response.ok
+    }
 }

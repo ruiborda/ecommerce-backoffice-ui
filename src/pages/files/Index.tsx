@@ -50,6 +50,7 @@ export function Index(): JSX.Element {
                                     <Th scope="col">Texto Alternativo</Th>
                                     <Th scope="col">Fecha de Subida</Th>
                                     <Th scope="col">Subido Por</Th>
+                                    <Th scope="col">Acciones Eliminar</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -69,6 +70,19 @@ export function Index(): JSX.Element {
                                             <Td>{file.alternateText}</Td>
                                             <Td>{new Date(file.uploadedAt).toLocaleDateString()}</Td>
                                             <Td>{file.uploadedBy}</Td>
+                                            <Td>
+                                                <button
+                                                    class="text-red-500 hover:text-red-700"
+                                                    onClick={async () => {
+                                                        if (confirm("¿Estás seguro de que deseas eliminar este archivo?")) {
+                                                            await filesService.deleteFileById(file.id)
+                                                            setPagination({ ...pagination(), page: 1 })
+                                                        }
+                                                    }}
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            </Td>
                                         </Tr>
                                     )}
                                 </For>

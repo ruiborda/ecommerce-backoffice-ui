@@ -15,6 +15,14 @@ import {
     fileToBase64,
     validateFileSize,
 } from "../../utils/FileUtils"
+// Importamos los componentes de input que necesitamos
+import {
+    DropzoneImageInput,
+    Input,
+} from "../../components/inputs"
+// Importamos los componentes de alerta
+import { ErrorPop, SuccessPop } from "../../components/alerts"
+
 const filesService = new FilesService()
 const ALLOWED_FILE_TYPES_STRING = "image/*"
 const ALLOWED_FILE_TYPES_DISPLAY = "Imágenes (JPG, PNG, GIF)"
@@ -81,30 +89,24 @@ export function UploadFiles(): JSX.Element {
                 enctype="multipart/form-data"
             >
                 <div class="grid grid-cols-1 gap-6">
-                    <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="file">Archivo</label>
-                        <input
-                            id="file"
-                            name="file"
-                            type="file"
-                            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            onChange={(e) => setFile(e.currentTarget.files?.[0] || null)}
-                            required
-                            accept={ALLOWED_FILE_TYPES_STRING}
-                        />
-                    </div>
+                    <DropzoneImageInput
+                        id="file"
+                        name="file"
+                        label="Imagen"
+                        title="Imágenes"
+                        description={`Sube o arrastra una imagen (${ALLOWED_FILE_TYPES_DISPLAY}). Tamaño máximo: ${MAX_FILE_SIZE_MB} MB.`}
+                        onChange={(e) => setFile(e.currentTarget.files?.[0] || null)}
+                        required
+                        accept={ALLOWED_FILE_TYPES_STRING}
+                    />
 
-                    <div>
-                        <label class="text-gray-700 dark:text-gray-200" for="alternateText">Texto
-                            Alternativo</label>
-                        <input
-                            id="alternateText"
-                            name="alternateText"
-                            type="text"
-                            class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                            required
-                        />
-                    </div>
+                    <Input
+                        id="alternateText"
+                        name="alternateText"
+                        label="Texto Alternativo"
+                        type="text"
+                        required
+                    />
                 </div>
 
                 <div class="flex justify-end mt-6">
@@ -118,15 +120,11 @@ export function UploadFiles(): JSX.Element {
                 </div>
 
                 <Show when={submission.result?.error}>
-                    <div class="mt-4 p-4 text-red-700 bg-red-100 rounded-md">
-                        {submission.result?.error}
-                    </div>
+                    <ErrorPop message={submission.result?.error as string} />
                 </Show>
 
                 <Show when={submission.result?.success}>
-                    <div class="mt-4 p-4 text-green-700 bg-green-100 rounded-md">
-                        Archivo subido exitosamente.
-                    </div>
+                    <SuccessPop message="Archivo subido exitosamente." />
                 </Show>
             </form>
         </section>

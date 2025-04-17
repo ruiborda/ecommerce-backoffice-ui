@@ -3,6 +3,7 @@ import { URLBuilder } from "../utils/UrlBuilder"
 import { Pagination } from "../dto/Pagination"
 import { PaginatedResponse } from "../dto/PaginatedResponse"
 import { PageFilesResponse } from "../dto/files/PageFilesResponse"
+import { UploadFileRequestDTO } from "../dto/files/UploadFileRequestDTO"
 
 export class FilesService {
 
@@ -24,6 +25,19 @@ export class FilesService {
             .setPathname(`/files/${id}`)
         const response = await fetch(url.build(), {
             method: "DELETE",
+        })
+        return response.ok
+    }
+
+    async uploadFile(fileData: UploadFileRequestDTO): Promise<boolean> {
+        const url = new URLBuilder()
+            .setPathname("/files")
+        const response = await fetch(url.build(), {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(fileData)
         })
         return response.ok
     }

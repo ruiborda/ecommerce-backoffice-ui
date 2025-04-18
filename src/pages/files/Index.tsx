@@ -15,13 +15,17 @@ import { Tr } from "../../components/table/Tr"
 import { Th } from "../../components/table/Th"
 import { Tbody } from "../../components/table/Tbody"
 import { Td } from "../../components/table/Td"
-import { Pagination } from "../../dto/Pagination"
+import {
+    Pagination,
+    PaginationParams
+} from "../../dto/PaginationParams"
+import { DangerButton } from "../../components/buttons"
 
 export function Index(): JSX.Element {
-    const [pagination, setPagination] = createSignal<Pagination>({
+    const [pagination, setPagination] = createSignal<Pagination>(new Pagination({
         page: 1,
         size: 10,
-    })
+    } as PaginationParams))
 
     const filesService = new FilesService()
     const [files] = createResource(pagination, filesService.pageFiles)
@@ -40,7 +44,10 @@ export function Index(): JSX.Element {
                 <Match when={files()}>
                     <section class="container px-4 mx-auto">
                         <h2 class="text-lg font-medium text-gray-800 dark:text-white">Archivos</h2>
-                        <Table paginationSignal={[pagination, setPagination]}>
+                        <Table 
+                            paginationSignal={[pagination, setPagination]}
+                            totalPages={files()?.page?.totalPages}
+                        >
                             <Thead>
                                 <Tr>
                                     <Th scope="col">Imagen</Th>
@@ -50,7 +57,7 @@ export function Index(): JSX.Element {
                                     <Th scope="col">Texto Alternativo</Th>
                                     <Th scope="col">Fecha de Subida</Th>
                                     <Th scope="col">Subido Por</Th>
-                                    <Th scope="col">Acciones Eliminar</Th>
+                                    <Th scope="col">Acciones</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
@@ -71,17 +78,20 @@ export function Index(): JSX.Element {
                                             <Td>{new Date(file.uploadedAt).toLocaleDateString()}</Td>
                                             <Td>{file.uploadedBy}</Td>
                                             <Td>
-                                                <button
-                                                    class="text-red-500 hover:text-red-700"
+                                                <DangerButton
+                                                    size="sm"
                                                     onClick={async () => {
                                                         if (confirm("¿Estás seguro de que deseas eliminar este archivo?")) {
                                                             await filesService.deleteFileById(file.id)
-                                                            setPagination({ ...pagination(), page: 1 })
+                                                            setPagination(new Pagination({ 
+                                                                ...pagination(), 
+                                                                page: 1 
+                                                            } as PaginationParams))
                                                         }
                                                     }}
                                                 >
                                                     Eliminar
-                                                </button>
+                                                </DangerButton>
                                             </Td>
                                         </Tr>
                                     )}

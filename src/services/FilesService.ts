@@ -1,13 +1,13 @@
 import { GetAllNewsArticlesResponseDTO } from "../dto/news_article/GetAllNewsArticlesResponseDTO"
 import { URLBuilder } from "../utils/UrlBuilder"
-import { Pagination } from "../dto/Pagination"
+import { PaginationParams } from "../dto/PaginationParams"
 import { PaginatedResponse } from "../dto/PaginatedResponse"
 import { PageFilesResponse } from "../dto/files/PageFilesResponse"
 import { UploadFileRequestDTO } from "../dto/files/UploadFileRequestDTO"
 
 export class FilesService {
 
-    async pageFiles(page: Pagination): Promise<PaginatedResponse<PageFilesResponse>> {
+    async pageFiles(page: PaginationParams): Promise<PaginatedResponse<PageFilesResponse>> {
         const url = new URLBuilder()
             .setPathname("/files/pages")
             .addSearchParams("page", page.page.toString())

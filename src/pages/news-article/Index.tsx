@@ -15,12 +15,12 @@ import { Tr } from "../../components/table/Tr"
 import { Th } from "../../components/table/Th"
 import { Tbody } from "../../components/table/Tbody"
 import { Td } from "../../components/table/Td"
-import { Pagination } from "../../dto/Pagination"
+import { PaginationParams } from "../../dto/PaginationParams"
 
 export function Index(): JSX.Element {
-    const [pagination, setPagination] = createSignal<Pagination>({
+    const [pagination, setPagination] = createSignal<PaginationParams>(new Pagination({
         page: 1, size: 10
-    })
+    }))
     const newsArticlesService = new NewsArticleService()
     const [newsArticles] = createResource(() => newsArticlesService.getAllNewsArticles())
     console.log(newsArticles())
@@ -47,20 +47,18 @@ export function Index(): JSX.Element {
                                 <Th scope="col">
                                     Fecha de Actualizacion
                                 </Th>
+                                <Th scope="col">
+                                    Fecha de Creacion
+                                </Th>
                             </Tr>
                         </Thead>
                         <Tbody>
-                            <For each={newsArticles()}>
-                                {(newsArticle) => (<Tr>
-                                    <Td class={"w-100"}>
-                                        {newsArticle.headline}
-                                    </Td>
-                                    <Td class={"w-30"}>
-                                        {newsArticle.datePublished}
-                                    </Td>
-                                    <Td class={"w-30"}>
-                                        {newsArticle.dateModified}
-                                    </Td>
+                            <For each={newsArticles()?.data}>
+                                {(news_article) => (<Tr>
+                                    <Td>{news_article.title}</Td>
+                                    <Td>{news_article.publishDate}</Td>
+                                    <Td>{news_article.lastUpdatedDate}</Td>
+                                    <Td>{news_article.createdDate}</Td>
                                 </Tr>)}
                             </For>
                         </Tbody>

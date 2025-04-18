@@ -13,24 +13,42 @@ export function DropzoneImageInput(props: DropzoneImageInputProps): JSX.Element 
   const [fileName, setFileName] = createSignal<string | null>(null);
   const [previewUrl, setPreviewUrl] = createSignal<string | null>(null);
 
-  // Handler para actualizar el nombre y la vista previa de la imagen
   const handleFileChange = (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       setFileName(file.name);
       
-      // Crear URL para la vista previa
       const fileUrl = URL.createObjectURL(file);
       setPreviewUrl(fileUrl);
+      
+    if (input.form) {
+        const formData = new FormData(input.form);
+        formData.set(input.name || 'file', file);
+      }
     } else {
       setFileName(null);
       setPreviewUrl(null);
     }
     
-    // Llamar al manejador de onChange proporcionado en los props si existe
-    if (props.onChange) {
-      if (typeof props.onChange === "function") {
+    if (props.onChange && typeof props.onChange === "function") {
+      props.onChange(event as any);
+    }
+  };
+
+  const resetFileInput = (e: MouseEvent) => {
+    e.preventDefault();
+    setFileName(null);
+    setPreviewUrl(null);
+    const inputEl = document.getElementById(id) as HTMLInputElement;
+    if (inputEl) {
+      inputEl.value = '';
+      
+      // Disparar un evento de cambio para actualizar el state en el componente padre
+      const event = new Event('change', { bubbles: true });
+      inputEl.dispatchEvent(event);
+      
+      if (props.onChange && typeof props.onChange === "function") {
         props.onChange(event as any);
       }
     }
@@ -61,13 +79,7 @@ export function DropzoneImageInput(props: DropzoneImageInputProps): JSX.Element 
             <button 
               type="button" 
               class="text-xs text-blue-500 hover:text-blue-700"
-              onClick={(e) => {
-                e.preventDefault();
-                setFileName(null);
-                setPreviewUrl(null);
-                const inputEl = document.getElementById(id) as HTMLInputElement;
-                if (inputEl) inputEl.value = '';
-              }}
+              onClick={resetFileInput}
             >
               Cambiar imagen
             </button>

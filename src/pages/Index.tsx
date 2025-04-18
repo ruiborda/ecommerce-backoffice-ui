@@ -3,6 +3,8 @@ import { School } from "../assets/material_icons/School"
 import { Google } from "../assets/svgl_icons/Google"
 import { Facebook } from "../assets/svgl_icons/Facebook"
 import { A } from "@solidjs/router"
+import { Button, OutlineButton } from "../components/buttons"
+import { Checkbox } from "../components/inputs"
 
 export function Index(): JSX.Element {
     return (
@@ -39,10 +41,9 @@ export function Index(): JSX.Element {
 
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
-                            <input id="remember-me" name="remember-me" type="checkbox"
-                                   class="h-4 w-4 text-gray-800 focus:ring-gray-500 border-gray-300 rounded"/>
+                            <Checkbox id="remember-me" name="remember-me" />
                             <label for="remember-me" class="ml-2 block text-sm text-gray-900">
-                                Recordarme {/* Changed text */}
+                                Recordarme
                             </label>
                         </div>
 
@@ -54,11 +55,13 @@ export function Index(): JSX.Element {
                     </div>
 
                     <div>
-                        <A
+                        <Button
+                            as={A}
                             href="/news-article"
-                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            fullWidth
+                            class="bg-gray-800 hover:bg-gray-700 focus:ring-gray-500">
                             Iniciar sesión
-                        </A>
+                        </Button>
                     </div>
                 </form>
 
@@ -74,31 +77,32 @@ export function Index(): JSX.Element {
                     </div>
                 </div>
 
-
-                {/* Kept standard white social buttons */}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <a href="/news-article"
-                           class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <OutlineButton
+                            as="a"
+                            href="/news-article"
+                            fullWidth
+                            class="inline-flex justify-center">
                             <span class="sr-only">Iniciar sesión con Google</span>
                             <Google class={"w-5 h-5 mr-2"}/>
                             Google
-                        </a>
+                        </OutlineButton>
                     </div>
 
-
                     <div>
-                        <a href="#"
-                           class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <OutlineButton
+                            as="a"
+                            href="#"
+                            fullWidth
+                            class="inline-flex justify-center">
                             <span class="sr-only">Iniciar sesión con GitHub</span>
                             <Facebook class={"w-5 h-5 mr-2"}/>
                             Facebook
-                        </a>
+                        </OutlineButton>
                     </div>
                 </div>
-
             </div>
-
         </div>
     )
 }

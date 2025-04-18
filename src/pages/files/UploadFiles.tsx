@@ -19,7 +19,11 @@ import {
     DropzoneImageInput,
     Input,
 } from "../../components/inputs"
-import { ErrorPop, SuccessPop } from "../../components/alerts"
+import {
+    ErrorFullWidth,
+    SuccessFullWidth,
+} from "../../components/alerts"
+import { SecondaryButton } from "../../components/buttons"
 
 const filesService = new FilesService()
 const ALLOWED_FILE_TYPES_STRING = "image/*"
@@ -30,44 +34,35 @@ const uploadFile = action(async (formData: FormData) => {
     const file = formData.get("file") as File
     const alternateText = formData.get("alternateText") as string
 
+    console.log("File received:", file ? file.name : "No file")
+    console.log("Alt text received:", alternateText)
+
+    // Validar que se haya seleccionado un archivo
+    if (!file || file.size === 0) {
+        return {error: "Debe seleccionar un archivo"}
+    }
+
     const sizeValidation = validateFileSize(file, MAX_FILE_SIZE_MB)
     if (!sizeValidation.valid) {
         return {error: sizeValidation.message}
     }
 
-    try {
-        const base64String = await fileToBase64(file)
-        const fileData: UploadFileRequestDTO = {
-            alternateText, fileBase64: base64String.split(",")[1],
-        }
-
-        const success = await filesService.uploadFile(fileData)
-        if (!success) {
-            return {error: "Error al subir el archivo al servidor"}
-        }
-        return {success: true}
-    } catch (error) {
-        return {
-            error: "Error procesando el archivo: " + (error instanceof Error ? error.message : "Error desconocido"),
-        }
+    const base64String = await fileToBase64(file)
+    const fileData: UploadFileRequestDTO = {
+        alternateText, fileBase64: base64String.split(",")[1],
     }
+
+    return await filesService.uploadFile(fileData)
 }, "uploadFile")
 
 export function UploadFiles(): JSX.Element {
     const submission = useSubmission(uploadFile)
-    const [file, setFile] = createSignal<File | null>(null)
-
-    const handleSuccess = () => {
-        setFile(null)
-        const altTextInput = document.getElementById("alternateText") as HTMLInputElement | null
-        if (altTextInput) altTextInput.value = ""
-        const fileInput = document.getElementById("file") as HTMLInputElement | null
-        if (fileInput) fileInput.value = ""
-    }
-
+    let formRef: HTMLFormElement = {} as HTMLFormElement
+    const [formKey, setFormKey] = createSignal(0)
     createEffect(() => {
-        if (submission.result?.success) {
-            handleSuccess()
+        if (submission.result) {
+            setFormKey(1)
+            console.log("Form update")
         }
     })
 
@@ -81,6 +76,7 @@ export function UploadFiles(): JSX.Element {
             </div>
 
             <form
+                ref={formRef}
                 action={uploadFile}
                 method="post"
                 class="mt-6"
@@ -93,7 +89,6 @@ export function UploadFiles(): JSX.Element {
                         label="Imagen"
                         title="Imágenes"
                         description={`Sube o arrastra una imagen (${ALLOWED_FILE_TYPES_DISPLAY}). Tamaño máximo: ${MAX_FILE_SIZE_MB} MB.`}
-                        onChange={(e) => setFile(e.currentTarget.files?.[0] || null)}
                         required
                         accept={ALLOWED_FILE_TYPES_STRING}
                     />
@@ -107,22 +102,23 @@ export function UploadFiles(): JSX.Element {
                     />
                 </div>
 
-                <div class="flex justify-end mt-6">
-                    <button
+                <div class="flex justify-end my-6">
+                    <SecondaryButton
                         type="submit"
-                        disabled={submission.pending || !file()}
-                        class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 disabled:opacity-50"
+                        disabled={submission.pending}
+                        class="bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 disabled:opacity-50"
                     >
+                        {submission.pending}
                         {submission.pending ? "Subiendo..." : "Subir Archivo"}
-                    </button>
+                    </SecondaryButton>
                 </div>
 
-                <Show when={submission.result?.error}>
-                    <ErrorPop message={submission.result?.error as string} />
+                <Show when={submission.error}>
+                    <ErrorFullWidth message={"Error: " + submission.error}/>
                 </Show>
 
-                <Show when={submission.result?.success}>
-                    <SuccessPop message="Archivo subido exitosamente." />
+                <Show when={submission.result}>
+                    <SuccessFullWidth message="Archivo subido exitosamente."/>
                 </Show>
             </form>
         </section>

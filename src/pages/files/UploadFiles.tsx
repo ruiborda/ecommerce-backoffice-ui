@@ -58,11 +58,9 @@ const uploadFile = action(async (formData: FormData) => {
 export function UploadFiles(): JSX.Element {
     const submission = useSubmission(uploadFile)
     let formRef: HTMLFormElement = {} as HTMLFormElement
-    const [formKey, setFormKey] = createSignal(0)
     createEffect(() => {
         if (submission.result) {
-            setFormKey(1)
-            console.log("Form update")
+            formRef.reset()
         }
     })
 

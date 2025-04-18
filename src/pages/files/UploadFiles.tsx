@@ -15,12 +15,10 @@ import {
     fileToBase64,
     validateFileSize,
 } from "../../utils/FileUtils"
-// Importamos los componentes de input que necesitamos
 import {
     DropzoneImageInput,
     Input,
 } from "../../components/inputs"
-// Importamos los componentes de alerta
 import { ErrorPop, SuccessPop } from "../../components/alerts"
 
 const filesService = new FilesService()

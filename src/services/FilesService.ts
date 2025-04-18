@@ -41,4 +41,24 @@ export class FilesService {
         })
         return response.ok
     }
+
+    async getFileById(id: string): Promise<PageFilesResponse> {
+        const url = new URLBuilder()
+            .setPathname(`/files/${id}`)
+        const response = await fetch(url.build())
+        return response.json()
+    }
+
+    async updateFile(id: string, fileData: UploadFileRequestDTO): Promise<boolean> {
+        const url = new URLBuilder()
+            .setPathname(`/files`)
+        const response = await fetch(url.build(), {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(fileData)
+        })
+        return response.ok
+    }
 }

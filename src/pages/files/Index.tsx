@@ -19,7 +19,8 @@ import {
     Pagination,
     PaginationParams
 } from "../../dto/PaginationParams"
-import { DangerButton } from "../../components/buttons"
+import { DangerButton, InfoButton } from "../../components/buttons"
+import { useNavigate } from "@solidjs/router"
 
 export function Index(): JSX.Element {
     const [pagination, setPagination] = createSignal<Pagination>(new Pagination({
@@ -29,6 +30,7 @@ export function Index(): JSX.Element {
 
     const filesService = new FilesService()
     const [files] = createResource(pagination, filesService.pageFiles)
+    const navigate = useNavigate()
 
     const publicUrl = import.meta.env.VITE_R2_PUBLIC_URL
 
@@ -78,20 +80,28 @@ export function Index(): JSX.Element {
                                             <Td>{new Date(file.uploadedAt).toLocaleDateString()}</Td>
                                             <Td>{file.uploadedBy}</Td>
                                             <Td>
-                                                <DangerButton
-                                                    size="sm"
-                                                    onClick={async () => {
-                                                        if (confirm("¿Estás seguro de que deseas eliminar este archivo?")) {
-                                                            await filesService.deleteFileById(file.id)
-                                                            setPagination(new Pagination({ 
-                                                                ...pagination(), 
-                                                                page: 1 
-                                                            } as PaginationParams))
-                                                        }
-                                                    }}
-                                                >
-                                                    Eliminar
-                                                </DangerButton>
+                                                <div class="flex space-x-2">
+                                                    <InfoButton
+                                                        size="sm"
+                                                        onClick={() => navigate(`/files.edit/${file.id}`)}
+                                                    >
+                                                        Modificar
+                                                    </InfoButton>
+                                                    <DangerButton
+                                                        size="sm"
+                                                        onClick={async () => {
+                                                            if (confirm("¿Estás seguro de que deseas eliminar este archivo?")) {
+                                                                await filesService.deleteFileById(file.id)
+                                                                setPagination(new Pagination({ 
+                                                                    ...pagination(), 
+                                                                    page: 1 
+                                                                } as PaginationParams))
+                                                            }
+                                                        }}
+                                                    >
+                                                        Eliminar
+                                                    </DangerButton>
+                                                </div>
                                             </Td>
                                         </Tr>
                                     )}

@@ -15,10 +15,13 @@ import { Tr } from "../../components/table/Tr"
 import { Th } from "../../components/table/Th"
 import { Tbody } from "../../components/table/Tbody"
 import { Td } from "../../components/table/Td"
-import { PaginationParams } from "../../dto/PaginationParams"
+import {
+    Pagination,
+    PaginationParams,
+} from "../../dto/PaginationParams"
 
 export function Index(): JSX.Element {
-    const [pagination, setPagination] = createSignal<PaginationParams>(new Pagination({
+    const [pagination, setPagination] = createSignal<Pagination>(new Pagination({
         page: 1, size: 10
     }))
     const newsArticlesService = new NewsArticleService()
@@ -53,12 +56,12 @@ export function Index(): JSX.Element {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            <For each={newsArticles()?.data}>
+                            <For each={newsArticles()}>
                                 {(news_article) => (<Tr>
-                                    <Td>{news_article.title}</Td>
-                                    <Td>{news_article.publishDate}</Td>
-                                    <Td>{news_article.lastUpdatedDate}</Td>
-                                    <Td>{news_article.createdDate}</Td>
+                                    <Td>{news_article?.headline}</Td>
+                                    <Td>{news_article.datePublished}</Td>
+                                    <Td>{news_article.dateModified}</Td>
+                                    <Td>{news_article.datePublished}</Td>
                                 </Tr>)}
                             </For>
                         </Tbody>

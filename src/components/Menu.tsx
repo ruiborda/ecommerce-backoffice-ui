@@ -1,7 +1,4 @@
-import {
-    createSignal,
-    JSX,
-} from "solid-js"
+import { JSX } from "solid-js"
 import { Signal } from "solid-js/types/reactive/signal"
 import {
     WindowInnerWidth,
@@ -23,8 +20,7 @@ export function Menu(props: MenuProps): JSX.Element {
     const [menuStatus, setMenuStatus]: Signal<boolean> = props.menuStatus as Signal<boolean>
     const [currentWindowInnerWidth, setCurrentWindowInnerWidth]: Signal<WindowInnerWidth> = props.currentWindowInnerWidth as Signal<WindowInnerWidth>
     const iconClass = "h-8 w-8"
-    return (
-        <div classList={{
+    return (<div classList={{
             "bg-gray-900 gap-1": true,
             "z-40": true,
             "flex": true,
@@ -43,7 +39,7 @@ export function Menu(props: MenuProps): JSX.Element {
             <Links
                 href={"/news-article"}
                 icon={<Newspaper class={iconClass}/>}
-                isActive={false}>
+            >
                 Lista de Noticias
             </Links>
 
@@ -55,17 +51,16 @@ export function Menu(props: MenuProps): JSX.Element {
             <Links
                 href={"/files"}
                 icon={<HomeStorage class={iconClass}/>}
-                isActive={true}>
+            >
                 Lista de Archivos
             </Links>
             <Links
-                href={"/files/upload"}
+                href={"/files.upload"}
                 icon={<UploadFile class={iconClass}/>}
-                isActive={false}>
+            >
                 Subir Archivos
             </Links>
 
             <Divider/>
-        </div>
-    )
+        </div>)
 }

@@ -14,7 +14,7 @@ export function Routes(): JSX.Element {
             <Route path={"/"} component={Index}/>
             <Route path={"/news-article"} component={NewsArticleIndex}/>
             <Route path={"/files"} component={FilesIndex}/>
-            <Route path={"/files/upload"} component={FilesUploadFiles}/>
+            <Route path={"/files.upload"} component={FilesUploadFiles}/>
         </Router>
     )
 }

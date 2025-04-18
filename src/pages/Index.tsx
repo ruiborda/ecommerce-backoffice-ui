@@ -8,7 +8,7 @@ import { Checkbox } from "../components/inputs"
 
 export function Index(): JSX.Element {
     return (
-        <div class="min-h-screen flex flex-col items-center justify-center py-6 px-4 sm:px-6 lg:px-8 bg-neutral-200">
+        <div class="min-h-screen flex flex-col items-center justify-center py-6 px-4 sm:px-6 lg:px-8 bg-neutral-200 w-full">
 
             <div class="max-w-md w-full bg-white p-8 rounded-xl shadow-md space-y-6">
                 <div class="mb-6 flex justify-center">

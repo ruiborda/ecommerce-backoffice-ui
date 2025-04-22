@@ -34,10 +34,6 @@ const uploadFile = action(async (formData: FormData) => {
     const file = formData.get("file") as File
     const alternateText = formData.get("alternateText") as string
 
-    console.log("File received:", file ? file.name : "No file")
-    console.log("Alt text received:", alternateText)
-
-    // Validar que se haya seleccionado un archivo
     if (!file || file.size === 0) {
         return {error: "Debe seleccionar un archivo"}
     }
@@ -49,7 +45,8 @@ const uploadFile = action(async (formData: FormData) => {
 
     const base64String = await fileToBase64(file)
     const fileData: UploadFileRequestDTO = {
-        alternateText, fileBase64: base64String.split(",")[1],
+        alternateText,
+        fileBase64: base64String.split(",")[1],
     }
 
     return await filesService.uploadFile(fileData)

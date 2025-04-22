@@ -4,6 +4,7 @@ import { PaginationParams } from "../dto/PaginationParams"
 import { PaginatedResponse } from "../dto/PaginatedResponse"
 import { PageFilesResponse } from "../dto/files/PageFilesResponse"
 import { UploadFileRequestDTO } from "../dto/files/UploadFileRequestDTO"
+import { UpdateFileRequestDTO } from "../dto/files/UpdateFileRequestDTO"
 
 export class FilesService {
 
@@ -49,7 +50,7 @@ export class FilesService {
         return response.json()
     }
 
-    async updateFile(id: string, fileData: UploadFileRequestDTO): Promise<boolean> {
+    async updateFile(fileData: UpdateFileRequestDTO): Promise<boolean> {
         const url = new URLBuilder()
             .setPathname(`/files`)
         const response = await fetch(url.build(), {

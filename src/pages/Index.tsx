@@ -56,8 +56,6 @@ export function Index(): JSX.Element {
 
                     <div>
                         <Button
-                            as={A}
-                            href="/news-article"
                             fullWidth
                             class="bg-gray-800 hover:bg-gray-700 focus:ring-gray-500">
                             Iniciar sesión
@@ -80,8 +78,6 @@ export function Index(): JSX.Element {
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <OutlineButton
-                            as="a"
-                            href="/news-article"
                             fullWidth
                             class="inline-flex justify-center">
                             <span class="sr-only">Iniciar sesión con Google</span>
@@ -92,8 +88,6 @@ export function Index(): JSX.Element {
 
                     <div>
                         <OutlineButton
-                            as="a"
-                            href="#"
                             fullWidth
                             class="inline-flex justify-center">
                             <span class="sr-only">Iniciar sesión con GitHub</span>

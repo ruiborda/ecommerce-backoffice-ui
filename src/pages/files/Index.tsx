@@ -49,6 +49,7 @@ export function Index(): JSX.Element {
                         <Table 
                             paginationSignal={[pagination, setPagination]}
                             totalPages={files()?.page?.totalPages}
+                            pageInfo={files()?.page}
                         >
                             <Thead>
                                 <Tr>

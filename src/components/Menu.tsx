@@ -7,6 +7,7 @@ import {
 import { HomeStorage } from "../assets/material_icons/HomeStorage"
 import { UploadFile } from "../assets/material_icons/UploadFile"
 import { Newspaper } from "../assets/material_icons/Newspaper"
+import { Badge } from "../assets/material_icons/Badge"
 import { Links } from "./menu/Links"
 import { SectionTitle } from "./menu/SectionTitle"
 import { Divider } from "./menu/Divider"
@@ -59,6 +60,24 @@ export function Menu(props: MenuProps): JSX.Element {
                 icon={<UploadFile class={iconClass}/>}
             >
                 Subir Archivos
+            </Links>
+
+            <Divider/>
+
+            <SectionTitle>
+                Roles
+            </SectionTitle>
+            <Links
+                href={"/roles"}
+                icon={<Badge class={iconClass}/>}
+            >
+                Gestión de Roles
+            </Links>
+            <Links
+                href={"/roles.create"}
+                icon={<Badge class={iconClass}/>}
+            >
+                Crear Rol
             </Links>
 
             <Divider/>

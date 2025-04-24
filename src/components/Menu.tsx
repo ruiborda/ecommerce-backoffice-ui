@@ -8,6 +8,8 @@ import { HomeStorage } from "../assets/material_icons/HomeStorage"
 import { UploadFile } from "../assets/material_icons/UploadFile"
 import { Newspaper } from "../assets/material_icons/Newspaper"
 import { Badge } from "../assets/material_icons/Badge"
+import { Group } from "../assets/material_icons/Group"
+import { PersonAdd } from "../assets/material_icons/PersonAdd"
 import { Links } from "./menu/Links"
 import { SectionTitle } from "./menu/SectionTitle"
 import { Divider } from "./menu/Divider"
@@ -80,6 +82,24 @@ export function Menu(props: MenuProps): JSX.Element {
                 Crear Rol
             </Links>
 
+            <Divider/>
+
+            <SectionTitle>
+                Usuarios
+            </SectionTitle>
+            <Links
+                href={"/users"}
+                icon={<Group class={iconClass}/>}
+            >
+                Lista de Usuarios
+            </Links>
+            <Links
+                href={"/users.create"}
+                icon={<PersonAdd class={iconClass}/>}
+            >
+                Crear Usuario
+            </Links>
+            
             <Divider/>
         </div>)
 }

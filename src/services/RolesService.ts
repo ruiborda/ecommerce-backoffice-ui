@@ -4,13 +4,16 @@ import { PaginatedResponse } from "../dto/PaginatedResponse";
 import { RoleResponseDTO } from "../dto/roles/RoleResponseDTO";
 import { CreateRoleRequestDTO } from "../dto/roles/CreateRoleRequestDTO";
 import { UpdateRoleRequestDTO } from "../dto/roles/UpdateRoleRequestDTO";
+import { HeaderBuilder } from "../utils/HeaderBuilder";
 
 export class RolesService {
     
     async getRoleById(id: string): Promise<RoleResponseDTO> {
         const url = new URLBuilder()
             .setPathname(`/roles/${id}`)
-        const response = await fetch(url.build())
+        const response = await fetch(url.build(), {
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
+        })
         return response.json()
     }
 
@@ -22,7 +25,9 @@ export class RolesService {
         if (page?.query) {
             url.addSearchParams("query", page.query)
         }
-        const response = await fetch(url.build())
+        const response = await fetch(url.build(), {
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
+        })
         return response.json()
     }
 
@@ -31,9 +36,7 @@ export class RolesService {
             .setPathname("/roles")
         const response = await fetch(url.build(), {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
             body: JSON.stringify(roleData)
         })
         return response.json()
@@ -44,9 +47,7 @@ export class RolesService {
             .setPathname("/roles")
         const response = await fetch(url.build(), {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
             body: JSON.stringify(roleData)
         })
         return response.json()
@@ -57,6 +58,7 @@ export class RolesService {
             .setPathname(`/roles/${id}`)
         const response = await fetch(url.build(), {
             method: "DELETE",
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
         })
         return response.ok
     }

@@ -2,13 +2,94 @@ import { JSX } from "solid-js"
 import { School } from "../assets/material_icons/School"
 import { Google } from "../assets/svgl_icons/Google"
 import { Facebook } from "../assets/svgl_icons/Facebook"
-import { A } from "@solidjs/router"
-import { Button, OutlineButton } from "../components/buttons"
+import {
+    Button,
+    OutlineButton,
+} from "../components/buttons"
 import { Checkbox } from "../components/inputs"
 
-export function Index(): JSX.Element {
-    return (
-        <div class="min-h-screen flex flex-col items-center justify-center py-6 px-4 sm:px-6 lg:px-8 bg-neutral-200 w-full">
+export function Login(): JSX.Element {
+    const handleLoginWithGoogle = async () => {
+        const YOUR_CLIENT_ID = "742682450289-ivg15blealrjd6hasorom338j6np22v0.apps.googleusercontent.com"
+        const YOUR_REDIRECT_URI = "http://localhost:3000/login.with.google.callback"
+
+        const parseFragment = () => {
+            console.log("location", window.location.href)
+            const hash = window.location.hash.slice(1)
+            return Object.fromEntries(new URLSearchParams(hash))
+        }
+
+        const generateState = () => {
+            const arr = new Uint32Array(2)
+            crypto.getRandomValues(arr)
+            const raw = String.fromCharCode(...new Uint8Array(arr.buffer))
+            return btoa(raw).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")
+        }
+
+        const buildAuthUrl = (): string => {
+            const authUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth")
+            const params = {
+                client_id: YOUR_CLIENT_ID,
+                redirect_uri: YOUR_REDIRECT_URI,
+                response_type: "token",
+                scope: ["openid", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"].join(" "),
+                include_granted_scopes: "true",
+                state: generateState(),
+            }
+            authUrl.search = new URLSearchParams(params).toString()
+            localStorage.setItem("oauth2-state", params.state)
+            return authUrl.href
+        }
+
+        const oauth2SignIn = () => {
+            window.location.href = buildAuthUrl()
+        }
+
+        const fetchUserInfo = async (token) => {
+            console.log("token", token)
+            const url = new URL("https://openidconnect.googleapis.com/v1/userinfo")
+            const res = await fetch(url, {
+                headers: {Authorization: `Bearer ${token}`},
+            })
+            if (!res.ok) {
+                if (res.status === 401) throw new Error("Token inválido")
+                throw new Error(`HTTP error ${res.status}`)
+            }
+            return await res.json()
+        }
+
+        const trySampleRequest = async () => {
+            const params = JSON.parse(localStorage.getItem("oauth2-params") || "{}")
+            if (params.access_token) {
+                try {
+                    const info = await fetchUserInfo(params.access_token)
+                    console.log("UserInfo:", info)
+                } catch (err) {
+                    console.warn(err.message)
+                    oauth2SignIn()
+                }
+            } else {
+                oauth2SignIn()
+            }
+        }
+
+        window.addEventListener("load", () => {
+            const params = parseFragment()
+            if (params.state) {
+                const stored = localStorage.getItem("oauth2-state")
+                if (params.state === stored) {
+                    localStorage.setItem("oauth2-params", JSON.stringify(params))
+                    history.replaceState(null, "", window.location.pathname)
+                } else {
+                    console.error("State mismatch: posible CSRF")
+                }
+            }
+        })
+
+        await trySampleRequest()
+    }
+    return (<div
+            class="min-h-screen flex flex-col items-center justify-center py-6 px-4 sm:px-6 lg:px-8 bg-neutral-200 w-full">
 
             <div class="max-w-md w-full bg-white p-8 rounded-xl shadow-md space-y-6">
                 <div class="mb-6 flex justify-center">
@@ -41,7 +122,7 @@ export function Index(): JSX.Element {
 
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
-                            <Checkbox id="remember-me" name="remember-me" />
+                            <Checkbox id="remember-me" name="remember-me"/>
                             <label for="remember-me" class="ml-2 block text-sm text-gray-900">
                                 Recordarme
                             </label>
@@ -79,6 +160,7 @@ export function Index(): JSX.Element {
                     <div>
                         <OutlineButton
                             fullWidth
+                            onclick={handleLoginWithGoogle}
                             class="inline-flex justify-center">
                             <span class="sr-only">Iniciar sesión con Google</span>
                             <Google class={"w-5 h-5 mr-2"}/>
@@ -97,6 +179,5 @@ export function Index(): JSX.Element {
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        </div>)
 }

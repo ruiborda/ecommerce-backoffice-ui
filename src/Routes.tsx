@@ -7,18 +7,19 @@ import { Index as NewsArticleIndex } from "./pages/news-article/Index"
 import { UploadFiles as FilesUploadFiles } from "./pages/files/UploadFiles"
 import { EditFiles as FilesEditFiles } from "./pages/files/EditFiles"
 import { Index as FilesIndex } from "./pages/files/Index"
-import { Index } from "./pages/Index"
+import { Login } from "./pages/Login"
 import { Index as RolesIndex } from "./pages/roles/Index"
 import { CreateRole } from "./pages/roles/CreateRole"
 import { EditRole } from "./pages/roles/EditRole"
 import { ListUsers } from "./pages/users/ListUsers"
 import { CreateUser } from "./pages/users/CreateUser"
 import { EditUser } from "./pages/users/EditUser"
+import { LoginWithGoogleCallback } from "./pages/LoginWithGoogleCallback"
 
 export function Routes(): JSX.Element {
-    return (
-        <Router>
-            <Route path={"/"} component={Index}/>
+    return (<Router>
+            <Route path={"/"} component={Login}/>
+            <Route path={"/login.with.google.callback"} component={LoginWithGoogleCallback}/>
             <Route path={"/news-article"} component={NewsArticleIndex}/>
             <Route path={"/files"} component={FilesIndex}/>
             <Route path={"/files.upload"} component={FilesUploadFiles}/>
@@ -29,6 +30,5 @@ export function Routes(): JSX.Element {
             <Route path={"/users"} component={ListUsers}/>
             <Route path={"/users.create"} component={CreateUser}/>
             <Route path={"/users.edit/:id"} component={EditUser}/>
-        </Router>
-    )
+        </Router>)
 }

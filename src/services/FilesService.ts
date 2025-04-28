@@ -5,6 +5,7 @@ import { PaginatedResponse } from "../dto/PaginatedResponse"
 import { PageFilesResponse } from "../dto/files/PageFilesResponse"
 import { UploadFileRequestDTO } from "../dto/files/UploadFileRequestDTO"
 import { UpdateFileRequestDTO } from "../dto/files/UpdateFileRequestDTO"
+import { HeaderBuilder } from "../utils/HeaderBuilder"
 
 export class FilesService {
 
@@ -17,7 +18,9 @@ export class FilesService {
             url.addSearchParams("query", page.query)
         }
         console.log(url.build())
-        const response = await fetch(url.build())
+        const response = await fetch(url.build(), {
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
+        })
         return response.json()
     }
 
@@ -26,6 +29,7 @@ export class FilesService {
             .setPathname(`/files/${id}`)
         const response = await fetch(url.build(), {
             method: "DELETE",
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
         })
         return response.ok
     }
@@ -35,9 +39,7 @@ export class FilesService {
             .setPathname("/files")
         const response = await fetch(url.build(), {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
             body: JSON.stringify(fileData)
         })
         return response.ok
@@ -46,7 +48,9 @@ export class FilesService {
     async getFileById(id: string): Promise<PageFilesResponse> {
         const url = new URLBuilder()
             .setPathname(`/files/${id}`)
-        const response = await fetch(url.build())
+        const response = await fetch(url.build(), {
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
+        })
         return response.json()
     }
 
@@ -55,9 +59,7 @@ export class FilesService {
             .setPathname(`/files`)
         const response = await fetch(url.build(), {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
             body: JSON.stringify(fileData)
         })
         return response.ok

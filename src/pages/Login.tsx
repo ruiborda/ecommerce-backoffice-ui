@@ -10,7 +10,7 @@ import { Checkbox } from "../components/inputs"
 
 export function Login(): JSX.Element {
     const handleLoginWithGoogle = async () => {
-        const YOUR_CLIENT_ID = "742682450289-ivg15blealrjd6hasorom338j6np22v0.apps.googleusercontent.com"
+        const YOUR_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
         const YOUR_REDIRECT_URI = `${import.meta.env.VITE_APP_URL}/login.with.google.callback`
 
         const parseFragment = () => {

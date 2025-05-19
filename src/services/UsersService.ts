@@ -11,7 +11,7 @@ export class UsersService {
 
     async getUserById(id: string): Promise<UserResponseDTO> {
         const url = new URLBuilder()
-            .setPathname(`/users/${id}`)
+            .setPathname(`/api/v1/users/${id}`)
         const response = await fetch(url.build(), {
             headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
         })
@@ -20,7 +20,7 @@ export class UsersService {
 
     async pageUsers(page: PaginationParams): Promise<PaginatedResponse<UserResponseDTO>> {
         const url = new URLBuilder()
-            .setPathname("/users/pages")
+            .setPathname("/api/v1/users/pages")
             .addSearchParams("page", page.page.toString())
             .addSearchParams("size", page.size.toString())
         if (page?.query) {
@@ -35,7 +35,7 @@ export class UsersService {
 
     async createUser(userData: CreateUserRequestDTO): Promise<UserResponseDTO> {
         const url = new URLBuilder()
-            .setPathname("/users")
+            .setPathname("/api/v1/users")
         const response = await fetch(url.build(), {
             method: "POST",
             headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
@@ -46,7 +46,7 @@ export class UsersService {
 
     async updateUser(userData: UpdateUserRequestDTO): Promise<UserResponseDTO> {
         const url = new URLBuilder()
-            .setPathname("/users")
+            .setPathname("/api/v1/users")
         const response = await fetch(url.build(), {
             method: "PUT",
             headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),
@@ -57,7 +57,7 @@ export class UsersService {
 
     async deleteUserById(id: string): Promise<boolean> {
         const url = new URLBuilder()
-            .setPathname(`/users/${id}`)
+            .setPathname(`/api/v1/users/${id}`)
         const response = await fetch(url.build(), {
             method: "DELETE",
             headers: new HeaderBuilder().contentTypeJson().addAuthorization().build(),

@@ -36,35 +36,35 @@ export function Menu(props: MenuProps): JSX.Element {
             "text-gray-400": true,
             "flex-col": true,
         }}>
-            <SectionTitle>
-                Articulos de Noticias
-            </SectionTitle>
-            <Links
-                href={"/news-article"}
-                icon={<Newspaper class={iconClass}/>}
-            >
-                Lista de Noticias
-            </Links>
+            {/*<SectionTitle>*/}
+            {/*    Articulos de Noticias*/}
+            {/*</SectionTitle>*/}
+            {/*<Links*/}
+            {/*    href={"/news-article"}*/}
+            {/*    icon={<Newspaper class={iconClass}/>}*/}
+            {/*>*/}
+            {/*    Lista de Noticias*/}
+            {/*</Links>*/}
 
-            <Divider/>
+            {/*<Divider/>*/}
 
-            <SectionTitle>
-                Archivos
-            </SectionTitle>
-            <Links
-                href={"/files"}
-                icon={<HomeStorage class={iconClass}/>}
-            >
-                Lista de Archivos
-            </Links>
-            <Links
-                href={"/files.upload"}
-                icon={<UploadFile class={iconClass}/>}
-            >
-                Subir Archivos
-            </Links>
+            {/*<SectionTitle>*/}
+            {/*    Archivos*/}
+            {/*</SectionTitle>*/}
+            {/*<Links*/}
+            {/*    href={"/files"}*/}
+            {/*    icon={<HomeStorage class={iconClass}/>}*/}
+            {/*>*/}
+            {/*    Lista de Archivos*/}
+            {/*</Links>*/}
+            {/*<Links*/}
+            {/*    href={"/files.upload"}*/}
+            {/*    icon={<UploadFile class={iconClass}/>}*/}
+            {/*>*/}
+            {/*    Subir Archivos*/}
+            {/*</Links>*/}
 
-            <Divider/>
+            {/*<Divider/>*/}
 
             <SectionTitle>
                 Roles

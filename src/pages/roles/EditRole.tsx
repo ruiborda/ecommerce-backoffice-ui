@@ -44,10 +44,6 @@ const updateRole = action(async (formData: FormData) => {
         return {error: "El código del rol es requerido"}
     }
 
-    if (permissions.length === 0) {
-        return {error: "Debe seleccionar al menos un permiso"}
-    }
-
     const roleData: UpdateRoleRequestDTO = {
         id, code: code.toUpperCase(), permissions,
     }

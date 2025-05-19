@@ -43,10 +43,6 @@ const createRole = action(async (formData: FormData) => {
         return { error: "El código del rol es requerido" }
     }
 
-    if (permissions.length === 0) {
-        return { error: "Debe seleccionar al menos un permiso" }
-    }
-
     const roleData: CreateRoleRequestDTO = {
         code: code.toUpperCase(),
         permissions

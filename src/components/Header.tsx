@@ -38,7 +38,7 @@ export function Header(props: HeaderProps): JSX.Element {
                 </Switch>
             </button>
             <div class={"px-3 py-5 text-xl font-semibold"}>
-                Event Academic
+                Admin Panel
             </div>
         </div>
     )

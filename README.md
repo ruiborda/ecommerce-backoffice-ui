@@ -1,34 +1,84 @@
-## Usage
+# Panel de Administración E-commerce
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+Este repositorio contiene el panel de administración para el sistema de e-commerce, desarrollado con SolidJS y TailwindCSS.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## Requisitos
+
+- Node.js 16.0 o superior
+- pnpm (recomendado) o npm
+
+## Instalación
+
+Para instalar todas las dependencias, ejecuta:
 
 ```bash
-$ npm install # or pnpm install or yarn install
+pnpm install
+# o si prefieres usar npm:
+# npm install
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+## Configuración del Entorno
 
-## Available Scripts
+1. Crea un archivo `.env` basado en el archivo `example.env` proporcionado:
 
-In the project directory, you can run:
+```bash
+cp example.env .env
+# Edita el archivo .env con tus valores
+```
 
-### `npm run dev` or `npm start`
+2. Configura las URL de las APIs y otros valores necesarios en el archivo `.env`.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Ejecutando en Local
 
-The page will reload if you make edits.<br>
+Para iniciar el servidor de desarrollo:
 
-### `npm run build`
+```bash
+pnpm dev
+# o
+npm run dev
+```
 
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
+El panel estará disponible en [http://localhost:3000](http://localhost:3000).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Compilar para Producción
 
-## Deployment
+```bash
+pnpm build
+# o
+npm run build
+```
 
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+Los archivos generados estarán en la carpeta `dist/` y pueden ser alojados en cualquier servidor web estático.
+
+## Funcionalidades Principales
+
+El panel de administración incluye las siguientes características:
+
+- Gestión de usuarios y roles
+- Control de categorías y productos
+- Manejo de archivos multimedia
+- Autenticación con Google
+- Interfaz responsive para diferentes dispositivos
+
+## Estructura del Proyecto
+
+- `src/components`: Componentes reutilizables de la interfaz
+- `src/pages`: Vistas de cada sección del panel
+- `src/services`: Servicios para comunicación con APIs
+- `src/dto`: Objetos de transferencia de datos
+- `src/assets`: Iconos, imágenes y otros recursos
+- `src/utils`: Funciones utilidades
+
+## CI/CD
+
+Este proyecto utiliza GitHub Actions para integración y despliegue continuo. La configuración se encuentra en `.github/workflows/`.
+
+## Tecnologías Principales
+
+- [SolidJS](https://solidjs.com): Framework reactivo para construir interfaces
+- [TailwindCSS](https://tailwindcss.com): Framework CSS de utilidades
+- [solid-router](https://github.com/solidjs/solid-router): Enrutamiento para aplicaciones SolidJS
+
+## Licencia
+
+MIT
